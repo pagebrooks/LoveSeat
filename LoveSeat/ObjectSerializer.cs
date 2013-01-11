@@ -20,6 +20,7 @@ namespace LoveSeat
             settings.Converters = converters;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             settings.NullValueHandling = NullValueHandling.Ignore;
+            settings.TypeNameHandling = TypeNameHandling.Auto;
         }
 
         public T Deserialize<T>(string json)
