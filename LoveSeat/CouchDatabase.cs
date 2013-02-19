@@ -160,7 +160,8 @@ namespace LoveSeat
                 uri = uri + "?all_or_nothing=true";
             }
 
-            HttpWebResponse resp = GetRequest(uri).Post().Json().Data(data).GetResponse();
+            HttpWebResponse resp = GetRequest(uri).Timeout(300000).Post().Json().Data(data).GetResponse();
+            
 
             if (resp == null)
             {
@@ -377,7 +378,7 @@ namespace LoveSeat
         }
 
         private ViewResult<T> ProcessGenericResults<T>(string uri, ViewOptions options) {
-            CouchRequest req = GetRequest(options, uri);
+            CouchRequest req = GetRequest(options, uri).Timeout(300000);
             var resp = req.GetResponse();
             if (resp.StatusCode == HttpStatusCode.BadRequest) {
                 throw new CouchException(req.GetRequest(), resp, resp.GetResponseString() + "\n" + req.GetRequest().RequestUri);
@@ -430,7 +431,7 @@ namespace LoveSeat
         }
         private ViewResult ProcessResults(string uri, ViewOptions options)
         {
-            CouchRequest req = GetRequest(options, uri);
+            CouchRequest req = GetRequest(options, uri).Timeout(300000);
             var resp = req.GetResponse();
             return new ViewResult(resp, req.GetRequest());
         }
